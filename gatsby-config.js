@@ -64,6 +64,7 @@ module.exports = {
           `gatsby-remark-smartypants`,
           `gatsby-remark-autolink-headers`,
           `gatsby-remark-emoji`,
+          `gatsby-remark-extract-keywords`,
         ],
       },
     },
@@ -96,8 +97,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        host: 'https://n-log.netlify.app',
-        sitemap: 'https://n-log.netlify.app/sitemap.xml',
+        host: metaConfig.siteUrl,
+        sitemap: `${metaConfig.siteUrl}sitemap.xml`,
         policy: [
           {
             userAgent: '*',
@@ -112,6 +113,7 @@ module.exports = {
         publisherId: metaConfig.ad,
       },
     },
+
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-feed`,

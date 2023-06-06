@@ -4,6 +4,9 @@ import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
 export function Head({ description, lang, meta, keywords, title }) {
+
+  console.log('keywords', keywords.length, lang, meta, title, description);
+
   return (
     <StaticQuery
       query={detailsQuery}
@@ -13,10 +16,10 @@ export function Head({ description, lang, meta, keywords, title }) {
         return (
           <Helmet
             htmlAttributes={{
-              lang,
+              lang: 'ko',
             }}
             title={title}
-            titleTemplate={`%s | ${data.site.siteMetadata.title}`}
+            titleTemplate={`%s`}
             meta={[
               {
                 name: `description`,
@@ -54,10 +57,13 @@ export function Head({ description, lang, meta, keywords, title }) {
               .concat(
                 keywords.length > 0
                   ? {
-                      name: `keywords`,
-                      content: keywords.join(`, `),
-                    }
-                  : []
+                    name: `keywords`,
+                    content: Array.isArray(keywords) ? keywords.join(`, `) : keywords,
+                  }
+                  : (data.site.siteMetadata.keywords.length > 0 ? {
+                    name: `keywords`,
+                    content: data.site.siteMetadata.keywords.join(`, `),
+                  } : [])
               )
               .concat(meta)}
           />
@@ -88,7 +94,9 @@ const detailsQuery = graphql`
         title
         description
         author
+        keywords
       }
     }
+    
   }
 `
